@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using UniRx;
 using Unity.VisualScripting;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace QuestSystem.Scripts.Runtime.Goals
