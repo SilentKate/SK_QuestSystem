@@ -14,14 +14,14 @@ namespace QuestSystem.Scripts.Runtime.Goals
         private StateMachine _stateMachine;
 
         public StateMachineGoal(
-            string id, 
-            int targetCount,
-            [NotNull] StateMachine machine)
+            string id,
+            [NotNull] StateMachine machine,
+            int targetCount)
         {
             Id = !string.IsNullOrEmpty(id) ? id : throw new ArgumentNullException(nameof(id));
-            TargetCount = targetCount;
-            
             _machinePrefab = machine != null ? machine : throw new ArgumentNullException(nameof(machine));
+            
+            TargetCount = targetCount;
         }
 
         [UsedImplicitly]
@@ -53,12 +53,14 @@ namespace QuestSystem.Scripts.Runtime.Goals
             _stateMachine = Object.Instantiate(_machinePrefab);
         }
 
-        public void Complete()
-        {
-        }
-
         public void Abandon()
         {
+            if (_stateMachine != null)
+            {
+                Object.Destroy(_stateMachine.gameObject);
+            }
+
+            _stateMachine = null;
         }
 
         #endregion

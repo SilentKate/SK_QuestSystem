@@ -1,4 +1,7 @@
-﻿using UniRx;
+﻿#nullable enable
+
+using System;
+using UniRx;
 
 namespace QuestSystem.Scripts.Runtime.Goals
 {
@@ -11,10 +14,26 @@ namespace QuestSystem.Scripts.Runtime.Goals
         IReadOnlyReactiveProperty<Status> Status { get; }
 
         void Start();
-        void Complete();
         void Abandon();
     }
 
+    public readonly struct GoalId
+    {
+        public readonly int Value;
+
+        public GoalId(int value)
+        {
+            Value = value;
+        }
+
+        public bool Equals(GoalId other) => Value == other.Value;
+        public override bool Equals(object? obj) => obj is GoalId other && Equals(other);
+        public override int GetHashCode() => Value.GetHashCode();
+        public override string ToString() => Value.ToString();
+        public static Boolean operator ==(GoalId left, GoalId right) => left.Value == right.Value;
+        public static Boolean operator !=(GoalId left, GoalId right) => left.Value != right.Value;
+    }
+    
     public enum Status
     {
         None,
